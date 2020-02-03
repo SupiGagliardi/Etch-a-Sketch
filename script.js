@@ -1,13 +1,13 @@
 
 
 const container = document.querySelector('.container');
-
+let isDown = false;
 
 
 
 
 function randomRBG() {
-    
+
     let r = Math.floor(Math.random() * 256);
     let g = Math.floor(Math.random() * 256);
     let b = Math.floor(Math.random() * 256);
@@ -17,7 +17,7 @@ function randomRBG() {
 const rainbow = document.querySelector('#rainbow');
 
 rainbow.addEventListener('click', () => {
-    if(rainbow.textContent === 'Rainbow OFF'){
+    if (rainbow.textContent === 'Rainbow OFF') {
         rainbow.textContent = 'Rainbow ON'
     } else {
         rainbow.textContent = 'Rainbow OFF'
@@ -32,7 +32,15 @@ function initializeGrid(gridSize) {
     };
 
 
-    
+
+    window.addEventListener('mousedown', () => {
+        isDown = true;
+    })
+
+    window.addEventListener("mouseup", () => {
+        isDown = false;
+    })
+
     let boardSize = gridSize * gridSize;
 
     for (let i = 0; i < boardSize; i++) {
@@ -43,12 +51,16 @@ function initializeGrid(gridSize) {
     const divs = document.querySelector('main').querySelectorAll('div');
 
     divs.forEach((div) => {
+
         div.addEventListener('mouseover', () => {
-            
-            if(rainbow.textContent === 'Rainbow OFF'){
-                div.style.backgroundColor = 'black';
-            } else {
-                div.style.backgroundColor = randomRBG();
+
+            if (isDown) {
+
+                if (rainbow.textContent === 'Rainbow OFF') {
+                    div.style.backgroundColor = 'black';
+                } else {
+                    div.style.backgroundColor = randomRBG();
+                }
             }
         })
     })
